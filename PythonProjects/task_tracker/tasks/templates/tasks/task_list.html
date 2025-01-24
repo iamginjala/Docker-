@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing Tasks</title> <!-- The title of the web page -->
+    <!-- Add this inside the <head> tag in your HTML file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ3QhqLMpG8r+Knujs+fK0m30fchG4tbhTR7Z7bO1hl6O+7tZ6iq0rX9M32R" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Task List</h1> <!-- Header of the page -->
+
+    <!-- Link to the "Create Task" page -->
+    <a href="{% url 'task-create' %}">Add New Task</a>
+
+    <ul>
+        <!-- Loop through all tasks -->
+        {% for task in tasks %}
+            <li>
+                <!-- Link to the "Update Task" page for each task -->
+                <a href="{% url 'task-update' task.pk %}">{{ task.title }}</a>
+
+                <!-- Form to delete the task -->
+                <form action="{% url 'task-delete' task.pk %}" method="post" style="display: inline;">
+                    {% csrf_token %} <!-- Security token -->
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- Add this before closing </body> tag in your HTML file -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0U0FdzTxG4QFz8W4/sd/KwEV5xfXjFlGOSjE5ykErz91T6jb" crossorigin="anonymous"></script>
+
+</body>
+</html>
